@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Jupyter Notebook Script
+// @name         Jupyter Notebook Script v2
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  Small, simple jupyter enhancements
-// @author       Andy
+// @description  try to take over the world!
+// @author       You
 // @grant        none
 // ==/UserScript==
 
@@ -12,12 +12,11 @@
 
     window.addEventListener('load', function () {
 
-        // set width as page
+        // make broader
         document.querySelector('#notebook-container').style.width = "100%";
 
-        // make cells foldable
         var TARGET_HEIGHT = "50px";
-        
+
         var text_cells = document.querySelectorAll('.text_cell');
         for (let i = 0; i < text_cells.length; i++) {
             text_cells[i].style.display = "none";
@@ -37,6 +36,23 @@
                 } else {
                     this.closest(".code_cell").style.height = null;
                     this.closest(".code_cell").style.overflow = null;
+                }
+            });
+
+     code_cell_btns[i].addEventListener("dblclick", function() {
+                console.log("dblclicked");
+                console.log(this.closest(".code_cell"));
+                if(this.closest(".code_cell").style.height != TARGET_HEIGHT){
+                    for (let j = 0; j < code_cell_btns.length; j++) {
+                        code_cell_btns[j].closest(".code_cell").style.height = TARGET_HEIGHT;
+                        code_cell_btns[j].closest(".code_cell").style.overflow = "hidden";
+                    }
+
+                } else {
+                    for (let j = 0; j < code_cell_btns.length; j++) {
+                        code_cell_btns[j].closest(".code_cell").style.height = null;
+                        code_cell_btns[j].closest(".code_cell").style.overflow = null;
+                    }
                 }
             });
         }
